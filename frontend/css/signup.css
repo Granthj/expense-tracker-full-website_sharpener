@@ -63,8 +63,22 @@ button {
     cursor: pointer;
 }
 
+a {
+    color:rgb(18, 18, 42);
+    text-decoration: node;
+}
+a:hover{
+    text-decoration: underline;
+}
+#alert{
+    color:#fa0000;
+    text-align: center;
+    text-decoration: solid;
+    font-size: 15px;
+    margin-top: 5px;
+}
 button:hover {
-    background-color: #0056b3;
+    background-color: #fa0000;
 }
 button:active {
     transform: scale(0.98);
