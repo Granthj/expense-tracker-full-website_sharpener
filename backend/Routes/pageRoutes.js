@@ -7,6 +7,10 @@ const path = require('path');
 router.get('/sign-up',(req,res)=>{
     res.sendFile(path.join(__dirname,'../../frontend/views/signup.html'))
 })
+//login page route
+router.get('/login',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../../frontend/views/login.html'))
+})
 
 module.exports = router;
 

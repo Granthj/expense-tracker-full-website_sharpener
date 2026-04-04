@@ -11,9 +11,14 @@ const handleSubmit = async (e) => {
             email,
             password
         });
+        console.log(response)
+        if(response.data.success){
+            alert('Log in successfully');
+        }
     }
     catch (err) {
-        if (err.response && err.response.data) {
+        console.log(err.response)
+        if (err.response && !err.response.data.success) {
 
             const emailDiv = document.getElementById('emailDiv');
             const inputEmail = document.getElementById('email');
@@ -21,7 +26,7 @@ const handleSubmit = async (e) => {
             const passwordDiv = document.getElementById('passwordDiv');
             const inputPassword = document.getElementById('password');
 
-            const form = document.getElementById('form');
+            // const form = document.getElementById('form');
 
             const p = document.createElement('p');
             p.id = 'alert';
@@ -31,15 +36,10 @@ const handleSubmit = async (e) => {
                 inputEmail.insertAdjacentElement('afterend', p);
                 isFocus(inputEmail);
             }
-            else if (err.response.data.passwordError && !err.response.data.emailError) {
+            else {
                 p.textContent = 'Password is not matched';
                 inputPassword.insertAdjacentElement('afterend', p);
                 isFocus(inputPassword);
-            }
-            else {
-                p.textContent = 'Email and Password is wrong';
-                form.appendChild(p);
-                isFocus(form);
             }
         }
     }
@@ -47,11 +47,11 @@ const handleSubmit = async (e) => {
 
 const isFocus = (tagValue)=>{
 
-    tagValue.isFocus('focus',()=>{
+    tagValue.onfocus = ()=>{
 
         const alertError = document.getElementById('alert');
             if(alertError)
                 alertError.remove();
-    })
+    }
 
 }
