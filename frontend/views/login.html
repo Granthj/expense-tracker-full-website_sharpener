@@ -3,18 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="../css/signup.css">
+    <title>Login</title>
+    <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
 
 
         <form id="form" onsubmit="handleSubmit(event)">
-            <div id="nameDiv">
-
-                <label for="name">Name:</label>
-                <input type="text" id="name" placeholder="Enter your name" name="name" required>
-            </div>
 
             <div id="emailDiv">
 
@@ -22,18 +17,19 @@
                 <input type="email" id="email" placeholder="Enter your email" name="email" required>
             </div>
 
+
             <div id="passwordDiv">
 
                 <label for="password">Password:</label>
                 <input type="password" id="password" placeholder="Enter your password" name="password" required>
             </div>
 
-            <button type="submit" id="button">Sign Up</button>
+            <button type="submit" id="button">Login</button>
             <br>
-            <a href="login.html">Already registered? Click login here</a>
+            <a href="signup.html">Not registered yet? Click sign-up here</a>
         </form>
     <!-- </div> -->
-     <script src="../js/signup.js"></script>
+     <script src="../js/login.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 </html>
