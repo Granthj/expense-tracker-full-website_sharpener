@@ -1,0 +1,97 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    padding: 20px;
+}
+
+/* Main container */
+div {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+}
+
+/* Horizontal form layout */
+form {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: flex-end;
+    flex-wrap: wrap; /* responsive wrap */
+}
+
+/* Each field */
+form div {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 180px; /* prevents shrinking too much */
+}
+
+/* Labels */
+label {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+/* Inputs and select as boxes */
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fff;
+    font-size: 14px;
+}
+
+/* Focus effect */
+input:focus, select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* Button */
+button {
+    padding: 10px 15px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    height: 42px;
+}
+
+/* Hover */
+button:hover {
+    background: #0056b3;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    form {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+.expenseList{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
