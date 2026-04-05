@@ -20,6 +20,10 @@ const handleSubmit = async (e) => {
         console.log(err.response)
         if (err.response && !err.response.data.success) {
 
+            const errorExists = document.getElementById('alert');
+            if(errorExists){
+                errorExists.remove();
+            }
             const emailDiv = document.getElementById('emailDiv');
             const inputEmail = document.getElementById('email');
 

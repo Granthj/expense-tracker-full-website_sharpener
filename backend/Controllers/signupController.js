@@ -1,4 +1,5 @@
 const User = require('../Models/signupSchema');
+const bcrypt = require('bcrypt');
 
 const signUp = async(req,res)=>{
 
@@ -14,10 +15,12 @@ const signUp = async(req,res)=>{
        if(signupExists){
         return res.status(403).json({message:"email already exists",bool:true});
        }
+       const hashedPassword = await bcrypt.hash(password,10);
+       
        const signup = await User.create({
         name:name,
         email:email,
-        password:password
+        password:hashedPassword
        });
        res.status(201).json({message:"User created with email",bool:false}); 
     }

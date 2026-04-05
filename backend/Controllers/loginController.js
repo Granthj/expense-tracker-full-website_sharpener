@@ -1,4 +1,5 @@
 const User = require('../Models/signupSchema');
+const bcrypt = require('bcrypt');
 
 const login = async(req,res)=>{
 
@@ -11,10 +12,14 @@ const login = async(req,res)=>{
 
             }
         });
-        if(!login){
+        // console.log("type:", typeof login,login);
+        
+        if(login === null){
+            // console.log(login,'loginnnn')
             return res.status(404).json({emailError:true,passwordError:false,message:"Email not found",success:false});
         }
-        if(password !== login.password){
+        const hashedPassword = await bcrypt.compare(password,login.password);
+        if(!hashedPassword){
             return res.status(403).json({emailError:false,passwordError:true,message:"Password not matched",success:false});
         }
         return res.status(200).json({emailError:false,passwordError:false,message:"All Good",success:true}); 

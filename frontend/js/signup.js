@@ -18,6 +18,10 @@ const handleSubmit = async (e) => {
     }
     catch(err){
         if(err.response){
+            const errorExists = document.getElementById('alert');
+            if(errorExists){
+                errorExists.remove();
+            }
             const p = document.createElement('p');
             // const emailDiv = document.getElementById('emailDiv');
             const inputEmail = document.getElementById('email');
