@@ -12,30 +12,31 @@ body {
     padding: 20px;
 }
 
-/* Main container */
-div {
+/* Container */
+.container {
     max-width: 900px;
+    width: 100%;
     margin: 40px auto;
     padding: 20px;
     background: #fff;
     border-radius: 10px;
 }
 
-/* Horizontal form layout */
+/* Form */
 form {
     display: flex;
-    flex-direction: row;
     gap: 15px;
-    align-items: flex-end;
-    flex-wrap: wrap; /* responsive wrap */
+    align-items: stretch;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
-/* Each field */
+/* Fields */
 form div {
     display: flex;
     flex-direction: column;
-    flex: 1;
-    min-width: 180px; /* prevents shrinking too much */
+    flex: 1 1 200px; 
+    min-width: 0;
 }
 
 /* Labels */
@@ -44,17 +45,15 @@ label {
     font-size: 14px;
 }
 
-/* Inputs and select as boxes */
+/* Inputs */
 input, select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 6px;
-    background: #fff;
-    font-size: 14px;
 }
 
-/* Focus effect */
+/* Focus */
 input:focus, select:focus {
     outline: none;
     border-color: #007bff;
@@ -62,22 +61,77 @@ input:focus, select:focus {
 
 /* Button */
 button {
-    padding: 10px 15px;
-    background: #007bff;
-    color: #fff;
+    padding: 10px 25px;
+    background: #00dd0f;
+    color: white;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     height: 42px;
 }
-
-/* Hover */
+form button {
+    flex: 1 1 150px;   
+    height: 42px;
+    margin-top: 19px;
+}
 button:hover {
     background: #0056b3;
 }
 
-/* Mobile responsiveness */
+/* Table container */
+#expenseList {
+    margin-top: 20px;
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Table */
+table {
+    min-width: 600px; 
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Header */
+th {
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Cells */
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Hover */
+tr:hover {
+    background: #f5f5f5;
+}
+
+/* Delete button */
+td button {
+    padding: 6px 10px;
+    background: #dc3545;
+    border: none;
+    color: white;
+    border-radius: 4px;
+}
+
+td button:hover {
+    background: #a71d2a;
+}
+
+/* Mobile */
 @media (max-width: 600px) {
+
+    .container {
+        margin: 20px 10px;
+        padding: 15px;
+    }
+
     form {
         flex-direction: column;
     }
@@ -85,13 +139,4 @@ button:hover {
     button {
         width: 100%;
     }
-}
-.expenseList{
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 10px;
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
 }

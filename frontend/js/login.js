@@ -7,13 +7,17 @@ const handleSubmit = async (e) => {
         const email = e.target.email.value;
         const password = e.target.password.value;
 
-        const response = await axios.post('http://localhost:3000/api/login', {
-            email,
-            password
-        });
-        console.log(response)
+        const response = await axios.post('http://localhost:3000/api/login', 
+            {
+                email,
+                password
+            }
+        );
+        console.log(response);
         if(response.data.success){
+            localStorage.setItem('token',response.data.token);
             alert('Log in successfully');
+            window.location.href = "/expense"
         }
     }
     catch (err) {

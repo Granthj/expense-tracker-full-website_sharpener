@@ -8,9 +8,11 @@ const postExpense = async(req,res)=>{
         if(!expenseAmount || !category || !description){
             return res.status(400).json({message:'All fields are required'});
         }
-        const expense = await Expense.create({expenseAmount:expenseAmount,category:category,description:description});
+        const userId = req.userId;
+        console.log(userId,'userID is from user connected!');
+        const expense = await Expense.create({expenseAmount:expenseAmount,category:category,description:description,UserId:userId});
 
-        res.status(201).json(expense);
+        res.status(201).json([expense]);
     }
     catch(err){
         return res.status(500).send('Something wrong');
