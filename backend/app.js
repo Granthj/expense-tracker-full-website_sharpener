@@ -22,7 +22,7 @@ Expense.belongsTo(User);
 app.use('/api',apiRoutes);
 app.use('/',pageRoutes);
 
-db.sync().then(()=>{
+db.sync({force:true}).then(()=>{
     app.listen(3000,()=>{
         console.log('Connected to server 3000');
     });

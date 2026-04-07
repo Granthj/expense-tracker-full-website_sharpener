@@ -15,7 +15,9 @@ router.get('/login',(req,res)=>{
 router.get('/expense',userAuthenticate,(req,res)=>{
     res.sendFile(path.join(__dirname,'../../frontend/views/expense.html'));
 })
-
+router.get('/payment',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../../frontend/views/payment.html'));
+})
 module.exports = router;
 
 

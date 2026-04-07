@@ -3,6 +3,7 @@ const router = express.Router();
 const signupController = require('../Controllers/signupController');
 const loginController = require('../Controllers/loginController');
 const expenseController = require('../Controllers/expenseController');
+const paymentController = require('../Controllers/paymentController');
 const userAuthenticate = require('../Utils/authorization');
 
 //sign-up controller
@@ -14,5 +15,9 @@ router.post('/login',loginController);
 //expense controller
 router.post('/expense',userAuthenticate,expenseController.postExpense);
 router.get('/expense',userAuthenticate,expenseController.getExpense);
+
+//payment controller
+router.post('/pay',paymentController.processPayment);
+router.get('/payment-status/:orderId',paymentController.paymentStatus);
 
 module.exports = router;
