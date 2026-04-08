@@ -103,7 +103,32 @@ const showExpense = (expense) => {
     });
     parentList.appendChild(table);
 }
-const logout = ()=>{
-    localStorage.removeItem('token');
-     window.location.href = '/login'
+
+const handlePremium = async(e)=>{
+
+    try{
+        e.preventDefault();
+         const token = localStorage.getItem('token');
+         const response = await axios.get('http://localhost:3000/api/premium',
+            {
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            }
+        );
+        const premiumUl = document.getElementById('premium');
+        
+        response.data.forEach(data=>{
+            const li = document.createElement('li');
+            const text = document.createTextNode(`${data.user.name} - ${data.expenseAmount}`);
+            li.appendChild(text);
+            premiumUl.appendChild(li);
+        });  
+        
+
+    }
 }
+// const logout = ()=>{
+//     localStorage.removeItem('token');
+//      window.location.href = '/login'
+// }

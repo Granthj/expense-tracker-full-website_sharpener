@@ -19,6 +19,11 @@ const User = db.define('User', {
     password:{
         type:DataTypes.STRING,
         allowNull:false
+    },
+    isPremium:{
+        type:DataTypes.BOOLEAN,
+        defaultValue:false,
+        allowNull:false
     }
 });
 

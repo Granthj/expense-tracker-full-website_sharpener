@@ -4,6 +4,7 @@ const signupController = require('../Controllers/signupController');
 const loginController = require('../Controllers/loginController');
 const expenseController = require('../Controllers/expenseController');
 const paymentController = require('../Controllers/paymentController');
+const premiumController = require('../Controllers/premiumController');
 const userAuthenticate = require('../Utils/authorization');
 
 //sign-up controller
@@ -19,5 +20,7 @@ router.get('/expense',userAuthenticate,expenseController.getExpense);
 //payment controller
 router.post('/pay',paymentController.processPayment);
 router.get('/payment-status/:orderId',paymentController.paymentStatus);
+//premium controller
+router.get('/premium',premiumController);
 
 module.exports = router;
