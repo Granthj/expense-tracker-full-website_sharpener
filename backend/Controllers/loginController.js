@@ -21,7 +21,6 @@ const login = async(req,res)=>{
 
             }
         });
-        // console.log("type:", typeof login,login);
         
         if(login === null){
             // console.log(login,'loginnnn')

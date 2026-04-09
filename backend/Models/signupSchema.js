@@ -24,6 +24,11 @@ const User = db.define('User', {
         type:DataTypes.BOOLEAN,
         defaultValue:false,
         allowNull:false
+    },
+    totalExpense:{
+        type:DataTypes.INTEGER,
+        allowNull:false,
+        defaultValue:0
     }
 });
 

@@ -1,15 +1,18 @@
-document.addEventListener('DOMContentLoaded', getExpenses)
-    
+document.addEventListener('DOMContentLoaded', ()=>{
+    getExpenses();
+    showPremiumList();
+})    
 
 const handleSubmit = async (e) => {
-
+    
     try {
         e.preventDefault();
-
+        
         const expenseAmount = e.target.expenseAmount.value;
         const description = e.target.description.value;
         const category = e.target.category.value;
         const token = localStorage.getItem('token');
+        // console.log(token,'asasasasasas');
         const response = await axios.post('http://localhost:3000/api/expense', 
             {
                 expenseAmount,
@@ -23,7 +26,6 @@ const handleSubmit = async (e) => {
             }
         );
         getExpenses();
-        console.log(response);
         e.target.expenseAmount.value = '';
         e.target.description.value = '';
         e.target.category.value = ''
@@ -104,10 +106,10 @@ const showExpense = (expense) => {
     parentList.appendChild(table);
 }
 
-const handlePremium = async(e)=>{
+ const showPremiumList = async()=>{
 
     try{
-        e.preventDefault();
+        // e.preventDefault();
          const token = localStorage.getItem('token');
          const response = await axios.get('http://localhost:3000/api/premium',
             {
@@ -119,16 +121,24 @@ const handlePremium = async(e)=>{
         const premiumUl = document.getElementById('premium');
         
         response.data.forEach(data=>{
+            console.log(data.name,'vcdsvfyuweb')
+            const div = document.getElementById('premiumDiv');
             const li = document.createElement('li');
-            const text = document.createTextNode(`${data.user.name} - ${data.expenseAmount}`);
+            const text = document.createTextNode(`Name: ${data.name} - Amount: ${data.totalExpense}`);
             li.appendChild(text);
             premiumUl.appendChild(li);
+            div.appendChild(premiumUl);
         });  
-        
-
+    }
+    catch(err){
+        console.log(err.response);
     }
 }
-// const logout = ()=>{
-//     localStorage.removeItem('token');
-//      window.location.href = '/login'
-// }
+const logout = ()=>{
+    localStorage.removeItem('token');
+     window.location.href = '/login'
+}
+const goPayment = ()=>{
+    // localStorage.removeItem('token');
+     window.location.href = '/payment'
+}

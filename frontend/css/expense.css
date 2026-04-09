@@ -77,7 +77,13 @@ form button {
 button:hover {
     background: #0056b3;
 }
-
+#premium{
+    list-style: none;
+    font-size:30px;
+    margin-left: 30px;
+    padding:20px;
+    font-weight: 200;
+}
 /* Table container */
 #expenseList {
     margin-top: 20px;

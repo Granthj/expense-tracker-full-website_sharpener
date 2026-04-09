@@ -5,17 +5,11 @@ const getIsPremium = async(req,res)=>{
 
     try{
 
-        const premiumExpense = await Expense.findAll({
-            attributes:['expenseAmount'],
-            include:[
-                {
-                    model:User,
-                    attributes:['name'],
-                    where:{
-                        isPremium:true
-                    }
-                }
-            ]
+        const premiumExpense = await User.findAll({
+            attributes:['name','totalExpense'],
+            where:{
+                isPremium:true
+            }
         });
         res.status(200).json(premiumExpense);
     }

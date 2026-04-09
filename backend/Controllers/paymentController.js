@@ -1,5 +1,6 @@
 const {createOrder,getPaymentStatus} = require('../Services/cashFreeServices');
 const Payment = require('../Models/paymentSchema');
+const User = require('../Models/signupSchema');
 const processPayment = async (req, res) => {
     const orderId = "ORDER-" + Date.now();
     const orderAmount = 2000;
@@ -24,6 +25,11 @@ const processPayment = async (req, res) => {
             orderCurrency,
             paymentStatus:"Pending"
         });
+        
+        console.log(req.userId,'hello')
+        const user = await User.findByPk(req.userId);
+        user.isPremium = true;
+        user.save();
         res.json({paymentSessionId,orderId});
     }
     catch(err){

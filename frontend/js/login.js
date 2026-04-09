@@ -13,9 +13,9 @@ const handleSubmit = async (e) => {
                 password
             }
         );
-        console.log(response);
         if(response.data.success){
             localStorage.setItem('token',response.data.token);
+            // console.log(response.data.token);
             alert('Log in successfully');
             window.location.href = "/expense"
         }

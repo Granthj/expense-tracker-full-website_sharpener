@@ -2,7 +2,15 @@ const cashfree = Cashfree({
     mode: "sandbox",
 });
 document.getElementById("renderBtn").addEventListener("click", async() => {
-    const res = await axios.post('http://localhost:3000/api/pay');
+    const token = localStorage.getItem('token')
+    console.log(token,'paymentbfhch')
+    const res = await axios.post('http://localhost:3000/api/pay',{},{
+        
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+            
+    });
     const paymentSessionId = res.data.paymentSessionId;
     const orderId = res.data.orderId;
 

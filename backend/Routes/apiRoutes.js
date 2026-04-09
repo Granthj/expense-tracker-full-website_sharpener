@@ -18,7 +18,7 @@ router.post('/expense',userAuthenticate,expenseController.postExpense);
 router.get('/expense',userAuthenticate,expenseController.getExpense);
 
 //payment controller
-router.post('/pay',paymentController.processPayment);
+router.post('/pay',userAuthenticate,paymentController.processPayment);
 router.get('/payment-status/:orderId',paymentController.paymentStatus);
 //premium controller
 router.get('/premium',premiumController);

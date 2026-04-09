@@ -12,7 +12,7 @@ router.get('/login',(req,res)=>{
     res.sendFile(path.join(__dirname,'../../frontend/views/login.html'));
 })
 //expense page route
-router.get('/expense',userAuthenticate,(req,res)=>{
+router.get('/expense',(req,res)=>{
     res.sendFile(path.join(__dirname,'../../frontend/views/expense.html'));
 })
 router.get('/payment',(req,res)=>{
