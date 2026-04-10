@@ -16,11 +16,12 @@ router.post('/login',loginController);
 //expense controller
 router.post('/expense',userAuthenticate,expenseController.postExpense);
 router.get('/expense',userAuthenticate,expenseController.getExpense);
-
+router.delete('/delete-expense/:id',userAuthenticate,expenseController.deleteExpense);
+router.post('/create-category',expenseController.categoryWithAiGen);
 //payment controller
 router.post('/pay',userAuthenticate,paymentController.processPayment);
 router.get('/payment-status/:orderId',paymentController.paymentStatus);
 //premium controller
-router.get('/premium',premiumController);
+router.get('/premium',userAuthenticate,premiumController);
 
 module.exports = router;

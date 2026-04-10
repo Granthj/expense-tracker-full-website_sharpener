@@ -1,27 +1,69 @@
-document.addEventListener('DOMContentLoaded', ()=>{
+document.addEventListener('DOMContentLoaded', () => {
     getExpenses();
     showPremiumList();
-})    
-
-const handleSubmit = async (e) => {
+})
+const loadCategory = async(description) =>{
+    const category = document.getElementById('category');
+    const aiResponse = await axios.post('http://localhost:3000/api/create-category',{
+        description
+    });
+    console.log(aiResponse,'inside loadCategory')
+     const categories = JSON.parse(aiResponse.data.response);
+    category.innerHTML = '';
+       categories.forEach(arrData=>{
+            
+            const cleanData = arrData.replace(/\*\*/g, '');
+            const option = document.createElement('option');
+            option.value = cleanData;
+            option.textContent = cleanData;
+            category.appendChild(option);
+        });
     
+}
+const category = document.getElementById('category');
+category.addEventListener('focus', async () => {
+    const description = document.getElementById('description').value;
+    if (!description) return;
+    console.log(description,'inside desc')
+    await loadCategory(description);
+});
+const handleSubmit = async (e) => {
+
     try {
         e.preventDefault();
-        
+
         const expenseAmount = e.target.expenseAmount.value;
         const description = e.target.description.value;
-        const category = e.target.category.value;
+        // const category = e.target.category.value;
+        const category = document.getElementById('category');
+        // category.addEventListener('click',async()=>{
+        //     const aiResponse = await axios.post('http://localhost:3000/api/create-category',{
+        //         description
+        //     });
+        //     category.innerHTML = '';
+        //     aiResponse.data.response.forEach(arrData=>{
+
+        //         const cleanData = arrData.replace(/\*\*/g, '');
+        //         const option = document.createElement('option');
+        //         option.value = cleanData;
+        //         option.textContent = cleanData;
+        //         category.appendChild(option);
+        //     });
+        // });
+
+        const selectedCategory = category.value;
+        // console.log(aiResponse.data.response,'ai data dfghj');
         const token = localStorage.getItem('token');
         // console.log(token,'asasasasasas');
-        const response = await axios.post('http://localhost:3000/api/expense', 
+        const response = await axios.post('http://localhost:3000/api/expense',
             {
                 expenseAmount,
                 description,
-                category
+                selectedCategory
             },
             {
-                headers:{
-                    Authorization:`Bearer ${token}`
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
             }
         );
@@ -40,21 +82,22 @@ async function getExpenses() {
         const token = localStorage.getItem('token');
         const response = await axios.get('http://localhost:3000/api/expense',
             {
-                headers:{
-                    Authorization:`Bearer ${token}`
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
             }
         );
-        console.log(token,response.data,'in get loginnnn')
+        console.log(token, response.data, 'in get loginnnn')
         const parentList = document.getElementById('expenseList');
 
         parentList.innerHTML = '';
 
         // console.log(response, 'hgyug');
 
-        if(response.data.length !== 0){
-
-            showExpense(response.data);
+        if (response.data.length !== 0) {
+            // const parentList = document.getElementById('expenseList');
+            showExpense(response.data,null);
+            
         }
     }
     catch (err) {
@@ -63,20 +106,25 @@ async function getExpenses() {
 }
 const showExpense = (expense) => {
 
-    const header = ['Amount','Description','Category','Action'];
-    
-    const parentList = document.getElementById('expenseList');
+    // if(expense === null){
 
+    // }
+    const parentList = document.getElementById('expenseList');
+    const header = ['Amount', 'Description', 'Category', 'Action'];
+    
+    
     const table = document.createElement('table');
     const tr = document.createElement('tr');
+
+
     table.border = "1";
-    header.forEach(column=>{
+    header.forEach(column => {
         const th = document.createElement('th');
         th.textContent = column;
         tr.appendChild(th);
     })
     table.appendChild(tr);
-    
+
     // console.log(expense,'here post before')
     expense.forEach(data => {
         // console.log(data,'here post after')
@@ -95,6 +143,9 @@ const showExpense = (expense) => {
         const tdDelete = document.createElement('td');
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'Delete';
+        deleteBtn.addEventListener('click', async () => {
+            deleteExpense(data.id, tr);
+        })
         tdDelete.appendChild(deleteBtn);
 
         tr.appendChild(tdAmount);
@@ -104,41 +155,59 @@ const showExpense = (expense) => {
         table.appendChild(tr);
     });
     parentList.appendChild(table);
+    showPremiumList();
 }
 
- const showPremiumList = async()=>{
+const showPremiumList = async () => {
 
-    try{
+    try {
         // e.preventDefault();
-         const token = localStorage.getItem('token');
-         const response = await axios.get('http://localhost:3000/api/premium',
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:3000/api/premium',
             {
-                headers:{
-                    Authorization:`Bearer ${token}`
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
             }
         );
         const premiumUl = document.getElementById('premium');
-        
-        response.data.forEach(data=>{
-            console.log(data.name,'vcdsvfyuweb')
-            const div = document.getElementById('premiumDiv');
-            const li = document.createElement('li');
-            const text = document.createTextNode(`Name: ${data.name} - Amount: ${data.totalExpense}`);
-            li.appendChild(text);
-            premiumUl.appendChild(li);
-            div.appendChild(premiumUl);
-        });  
+        premiumUl.innerHTML = '';
+        response.data.forEach(data => {
+            if (data.totalExpense !== 0) {
+
+                console.log(data.name, 'vcdsvfyuweb')
+                const div = document.getElementById('premiumDiv');
+                const li = document.createElement('li');
+                const text = document.createTextNode(`Name: ${data.name} - Amount: ${data.totalExpense}`);
+                li.appendChild(text);
+                premiumUl.appendChild(li);
+                div.appendChild(premiumUl);
+            }
+        });
     }
-    catch(err){
+    catch (err) {
         console.log(err.response);
     }
 }
-const logout = ()=>{
-    localStorage.removeItem('token');
-     window.location.href = '/login'
+const deleteExpense = async (id, row) => {
+
+    const token = localStorage.getItem('token');
+    await axios.delete(`http://localhost:3000/api/delete-expense/${id}`,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    );
+    row.remove();
+    showPremiumList();
+    // showExpense(null);
 }
-const goPayment = ()=>{
+const logout = () => {
+    localStorage.removeItem('token');
+    window.location.href = '/login'
+}
+const goPayment = () => {
     // localStorage.removeItem('token');
-     window.location.href = '/payment'
+    window.location.href = '/payment'
 }

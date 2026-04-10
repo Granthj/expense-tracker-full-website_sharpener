@@ -5,7 +5,7 @@ const auth = async(req,res,next)=>{
     
     try{
         const header = req.header('Authorization');
-        console.log(header,'bubububu')
+        // console.log(header,'bubububu')
         if(!header){
            return res.status(401).json({message:'No token found'});
         }
