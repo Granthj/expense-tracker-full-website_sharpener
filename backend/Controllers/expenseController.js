@@ -1,28 +1,32 @@
 const Expense = require('../Models/expenseSchema');
 const User = require('../Models/signupSchema');
 const generateResponse = require('../Services/gemini_api');
+const sequelize = require('../Utils/db');
 
 const postExpense = async(req,res)=>{
 
+    const transaction = await sequelize.transaction();
     try{
         const {expenseAmount,category,description} = req.body;
 
         if(!expenseAmount || !category || !description){
+            await transaction.rollback()
             return res.status(400).json({message:'All fields are required'});
         }
         const userId = req.userId;
         console.log(userId,'userID is from user connected!');
-        const user = await User.findByPk(userId);
+        const user = await User.findByPk(userId,{transaction});
         // console.log(user.totalExpense, typeof user.totalExpense);
         // console.log(expenseAmount, typeof expenseAmount);
         user.totalExpense = Number(user.totalExpense) + Number(expenseAmount);
-        await user.save();
+        await user.save({transaction:transaction});
 
-        const expense = await Expense.create({expenseAmount:expenseAmount,category:category,description:description,UserId:userId});
-
+        const expense = await Expense.create({expenseAmount:expenseAmount,category:category,description:description,UserId:userId},{transaction});
+        await transaction.commit();
         res.status(201).json([expense]);
     }
     catch(err){
+        transaction.rollback();
         return res.status(500).send('Something wrong');
     }
 }
@@ -43,10 +47,11 @@ const getExpense = async(req,res)=>{
 }
 const deleteExpense = async(req,res)=>{
 
+    const transaction = await sequelize.transaction();
     try{
         const {id} = req.params;
-        const user = await User.findByPk(req.userId);
-        const expense = await Expense.findByPk(id);
+        const user = await User.findByPk(req.userId,{transaction});
+        const expense = await Expense.findByPk(id,{transaction});
         console.log(id)
         if(user.isPremium === true){
 
@@ -54,13 +59,14 @@ const deleteExpense = async(req,res)=>{
             if(user.totalExpense <= 0){
                 user.totalExpense = 0;
             }
-            await user.save();
+            await user.save({transaction});
         }
-        await expense.destroy();
-
+        await expense.destroy({transaction});
+        await transaction.commit();
         res.status(200).json({message:'Delete is done'});
     }
     catch(err){
+        await transaction.rollback();
         return res.status(500).send('Something wrong');
     }
 }

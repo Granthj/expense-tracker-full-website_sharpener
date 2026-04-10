@@ -8,16 +8,16 @@ const loadCategory = async(description) =>{
         description
     });
     console.log(aiResponse,'inside loadCategory')
-     const categories = JSON.parse(aiResponse.data.response);
+    const categories = JSON.parse(aiResponse.data.response);
     category.innerHTML = '';
-       categories.forEach(arrData=>{
-            
-            const cleanData = arrData.replace(/\*\*/g, '');
-            const option = document.createElement('option');
-            option.value = cleanData;
-            option.textContent = cleanData;
-            category.appendChild(option);
-        });
+    categories.forEach(arrData=>{
+        
+        const cleanData = arrData.replace(/\*\*/g, '');
+        const option = document.createElement('option');
+        option.value = cleanData;
+        option.textContent = cleanData;
+        category.appendChild(option);
+    });
     
 }
 const category = document.getElementById('category');
