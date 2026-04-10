@@ -18,6 +18,11 @@ router.get('/expense',(req,res)=>{
 router.get('/payment',(req,res)=>{
     res.sendFile(path.join(__dirname,'../../frontend/views/payment.html'));
 })
+
+
+router.post('/password',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../../frontend/views/getOtp.html'));
+})
 module.exports = router;
 
 
