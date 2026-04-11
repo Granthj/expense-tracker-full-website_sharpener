@@ -20,8 +20,11 @@ router.get('/payment',(req,res)=>{
 })
 
 
-router.post('/password',(req,res)=>{
-    res.sendFile(path.join(__dirname,'../../frontend/views/getOtp.html'));
+router.get('/password',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../../frontend/views/forgotpassword.html'));
+})
+router.get('/password/forgotpassword',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../../frontend/views/resetpassword.html'));
 })
 module.exports = router;
 

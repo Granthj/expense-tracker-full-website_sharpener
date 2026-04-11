@@ -22,4 +22,4 @@ const Expense = db.define('Expenses',{
     }
 });
 
-module.exports = Expense;;
+module.exports = Expense;

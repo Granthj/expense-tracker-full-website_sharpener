@@ -5,6 +5,7 @@ const loginController = require('../Controllers/loginController');
 const expenseController = require('../Controllers/expenseController');
 const paymentController = require('../Controllers/paymentController');
 const premiumController = require('../Controllers/premiumController');
+const resetpassword = require('../Controllers/resetPassword');
 const userAuthenticate = require('../Utils/authorization');
 
 //sign-up controller
@@ -23,5 +24,7 @@ router.post('/pay',userAuthenticate,paymentController.processPayment);
 router.get('/payment-status/:orderId',paymentController.paymentStatus);
 //premium controller
 router.get('/premium',userAuthenticate,premiumController);
+router.post('/password',resetpassword.changePassword);
+router.post('/password/forgotpassword',resetpassword.linkToChangePassword);
 
 module.exports = router;
