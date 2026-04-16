@@ -6,6 +6,7 @@ const expenseController = require('../Controllers/expenseController');
 const paymentController = require('../Controllers/paymentController');
 const premiumController = require('../Controllers/premiumController');
 const resetpassword = require('../Controllers/resetPassword');
+const incomeController = require('../Controllers/incomeController');
 const userAuthenticate = require('../Utils/authorization');
 
 //sign-up controller
@@ -24,7 +25,12 @@ router.post('/pay',userAuthenticate,paymentController.processPayment);
 router.get('/payment-status/:orderId',paymentController.paymentStatus);
 //premium controller
 router.get('/premium',userAuthenticate,premiumController);
+//resetpaasword controller
 router.post('/password',resetpassword.changePassword);
 router.post('/password/forgotpassword',resetpassword.linkToChangePassword);
+//income controller
+router.post('/add-income',userAuthenticate,incomeController.postIncome);
+router.get('/income',userAuthenticate,incomeController.getIncome);
+router.delete('/delete-income/:id',userAuthenticate,incomeController.deleteIncome);
 
 module.exports = router;

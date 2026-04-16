@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your's expenses</title>
-    <link rel="stylesheet" href="../css/expense.css">
-</head>
-<body>
+
     <div class="container">
         <form id="expenseForm" onsubmit="handleSubmit(event)">
             <div class="expenseAmount">
@@ -17,20 +9,23 @@
                 <label for="description">Description:</label>
                 <input type="text" id="description" name="description">
             </div>
-            <div class="category">
+            <div class="category" id="categoryDiv">
                 <label for="category">Choose category:</label>
                 
                 <select name="category" id="category">
-                    <!-- <option value="movie">Movies</option>
+                    <option value="movie">Movies</option>
                     <option value="food">Food</option>
                     <option value="travel">Travel</option>
                     <option value="gaged">Gageds</option>
                     <option value="cloth">Cloths</option>
                     <option value="shoe">Shoes</option>
-                    <option value="gimick">Gimicks</option> -->
+                    <option value="gimick">Gimicks</option>
                 </select> 
             </div>
             <button type="submit">Add Expense</button>
+            <div id="categoryBtnAiDiv">
+                <button id="categoryBtnAi" type="button">Choose category by Ai</button>
+            </div>
         </form>
     </div>
     <div id="expenseList"></div>
@@ -42,6 +37,5 @@
         <ul id="premium"></ul>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-     <script src="../js/expense.js"></script>
-</body>
-</html>
+    <script src="../js/navbar.js"></script>
+    <script src="../js/expense.js"></script>

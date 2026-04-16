@@ -1,32 +1,116 @@
 document.addEventListener('DOMContentLoaded', () => {
     getExpenses();
     showPremiumList();
+    
+    const amountTag = document.getElementById('expenseAmount');
+    const descriptionTag = document.getElementById('description');
+    function removeWarn() {
+        const warn = document.getElementById('warn-msg');
+        if (warn) warn.remove();
+    }
+
+    // remove warning when user interacts
+    amountTag.addEventListener('input', removeWarn);
+    descriptionTag.addEventListener('input', removeWarn);
 })
-const loadCategory = async(description) =>{
-    const category = document.getElementById('category');
-    const aiResponse = await axios.post('http://localhost:3000/api/create-category',{
+const loadCategory = async (description) => {
+    const categoryDiv = document.getElementById('categoryDiv');
+    const aicategory = document.createElement('select');
+    const oldAiCategory = document.getElementById('ai-category');
+    if (oldAiCategory) {
+        oldAiCategory.remove();
+    }
+    aicategory.id = 'ai-category';
+    aicategory.name = 'category generating by Ai';
+    const aiResponse = await axios.post('http://localhost:3000/api/create-category', {
         description
     });
-    console.log(aiResponse,'inside loadCategory')
+    // console.log(aiResponse, 'inside loadCategory')
     const categories = JSON.parse(aiResponse.data.response);
-    category.innerHTML = '';
-    categories.forEach(arrData=>{
-        
+    // aicategory.innerHTML = '';
+    categories.forEach(arrData => {
+
         const cleanData = arrData.replace(/\*\*/g, '');
         const option = document.createElement('option');
         option.value = cleanData;
         option.textContent = cleanData;
-        category.appendChild(option);
+        aicategory.appendChild(option);
     });
-    
+    categoryDiv.appendChild(aicategory);
+
+    return aicategory;
+
 }
-const category = document.getElementById('category');
-category.addEventListener('focus', async () => {
-    const description = document.getElementById('description').value;
-    if (!description) return;
-    console.log(description,'inside desc')
-    await loadCategory(description);
-});
+const createCategoryBtb = document.getElementById('categoryBtnAi');
+const categoryBtnAiDiv = document.getElementById('categoryBtnAiDiv');
+const selectedCategoryTag = document.getElementById('category');
+
+createCategoryBtb.addEventListener('click', async () => {
+    let warnMsg = document.getElementById('warn-msg');
+    const descriptionTag = document.getElementById('description');
+    // const amountTag = document.getElementById('expenseAmount');
+    const description = descriptionTag.value;
+
+    if (!warnMsg) {
+        warnMsg = document.createElement('p');
+        warnMsg.id = 'warn-msg';
+        warnMsg.style.color = 'red'
+    }
+    if (!description) {
+
+        warnMsg.textContent = 'Please first fill Amount and Description';
+        // createCategoryBtb.insertAdjacentElement('afterend', warnMsg);
+        categoryBtnAiDiv.appendChild(warnMsg);
+        // const removeWarn = () => {
+        //     const warnMsg = document.getElementById('warn-msg');
+
+        //     if (!warnMsg) return;
+
+        //     warnMsg.remove();
+        // }
+        // descriptionTag.addEventListener('click', removeWarn, { once: true });
+        // amountTag.addEventListener('click', removeWarn, { once: true });
+        return;
+    }
+    // else{
+    //     warnMsg.remove();
+    // }
+    // setTimeout(() => {
+    //     document.addEventListener('click', (e) => {
+    //         const warnMsg = document.getElementById('warn-msg');
+
+    //         if (!warnMsg) return;
+
+    //         warnMsg.remove();
+    //     });
+    // }, 0);
+
+    selectedCategoryTag.disabled = true;
+
+    const aiSelect = await loadCategory(description);
+
+    aiSelect.addEventListener('change', () => {
+        const value = aiSelect.value;
+        let exists = false;
+        for (let option of selectedCategoryTag.options) {
+            if (option.value === value) {
+                exists = true;
+                break;
+            }
+        }
+        if (!exists) {
+            const option = document.createElement('option');
+            option.value = value;
+            option.textContent = value;
+            // exists = true;
+            selectedCategoryTag.appendChild(option);
+
+        }
+        selectedCategoryTag.value = aiSelect.value;
+        aiSelect.remove();
+        selectedCategoryTag.disabled = false;
+    });
+})
 const handleSubmit = async (e) => {
 
     try {
@@ -34,32 +118,14 @@ const handleSubmit = async (e) => {
 
         const expenseAmount = e.target.expenseAmount.value;
         const description = e.target.description.value;
-        // const category = e.target.category.value;
-        const category = document.getElementById('category');
-        // category.addEventListener('click',async()=>{
-        //     const aiResponse = await axios.post('http://localhost:3000/api/create-category',{
-        //         description
-        //     });
-        //     category.innerHTML = '';
-        //     aiResponse.data.response.forEach(arrData=>{
-
-        //         const cleanData = arrData.replace(/\*\*/g, '');
-        //         const option = document.createElement('option');
-        //         option.value = cleanData;
-        //         option.textContent = cleanData;
-        //         category.appendChild(option);
-        //     });
-        // });
-
-        const selectedCategory = category.value;
-        // console.log(aiResponse.data.response,'ai data dfghj');
+        const category = e.target.category.value;
+        console.log(expenseAmount, description, category, 'expense');
         const token = localStorage.getItem('token');
-        // console.log(token,'asasasasasas');
         const response = await axios.post('http://localhost:3000/api/expense',
             {
                 expenseAmount,
                 description,
-                selectedCategory
+                category
             },
             {
                 headers: {
@@ -71,6 +137,8 @@ const handleSubmit = async (e) => {
         e.target.expenseAmount.value = '';
         e.target.description.value = '';
         e.target.category.value = ''
+
+
     }
     catch (err) {
         console.log(err.response);
@@ -96,8 +164,8 @@ async function getExpenses() {
 
         if (response.data.length !== 0) {
             // const parentList = document.getElementById('expenseList');
-            showExpense(response.data,null);
-            
+            showExpense(response.data, null);
+
         }
     }
     catch (err) {
@@ -111,8 +179,8 @@ const showExpense = (expense) => {
     // }
     const parentList = document.getElementById('expenseList');
     const header = ['Amount', 'Description', 'Category', 'Action'];
-    
-    
+
+
     const table = document.createElement('table');
     const tr = document.createElement('tr');
 

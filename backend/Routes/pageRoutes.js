@@ -13,7 +13,7 @@ router.get('/login',(req,res)=>{
 })
 //expense page route
 router.get('/expense',(req,res)=>{
-    res.sendFile(path.join(__dirname,'../../frontend/views/expense.html'));
+    res.sendFile(path.join(__dirname,'../../frontend/Component/newExpense.js'));
 })
 router.get('/payment',(req,res)=>{
     res.sendFile(path.join(__dirname,'../../frontend/views/payment.html'));

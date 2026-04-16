@@ -8,6 +8,11 @@ const Expense = db.define('Expenses',{
         autoIncrement:true,
         primaryKey:true
     },
+    date:{
+        type:DataTypes.DATEONLY,
+        allowNull:false,
+        defaultValue:DataTypes.NOW
+    },
     expenseAmount:{
         type:DataTypes.INTEGER,
         allowNull:false

@@ -1,148 +1,223 @@
-/* Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Body */
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
-    padding: 20px;
-}
-
-/* Container */
-.container {
-    max-width: 900px;
-    width: 100%;
+/* =========================
+   WRAPPER
+========================= */
+.expense-container {
+    max-width: 950px;
     margin: 40px auto;
     padding: 20px;
-    background: #fff;
-    border-radius: 10px;
 }
 
-/* Form */
-form {
+/* =========================
+   FORM CARD
+========================= */
+.expense-container form {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
     display: flex;
-    gap: 15px;
-    align-items: stretch;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    gap: 15px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
 }
 
-/* Fields */
-form div {
+/* INPUT GROUP */
+.expense-container form div {
     display: flex;
     flex-direction: column;
-    flex: 1 1 200px; 
-    min-width: 0;
+    flex: 1 1 200px;
 }
 
-/* Labels */
-label {
+/* LABEL */
+.expense-container label {
+    font-size: 13px;
     margin-bottom: 5px;
-    font-size: 14px;
+    color: #555;
+    font-weight: 600;
 }
 
-/* Inputs */
-input, select {
-    width: 100%;
+/* INPUT + SELECT */
+.expense-container input,
+.expense-container select {
     padding: 10px;
-    border: 1px solid #ccc;
     border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    transition: 0.2s;
 }
 
-/* Focus */
-input:focus, select:focus {
+.expense-container input:focus,
+.expense-container select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 2px rgba(102,126,234,0.15);
     outline: none;
-    border-color: #007bff;
 }
 
-/* Button */
-button {
-    padding: 10px 25px;
-    background: #00dd0f;
+/* ADD BUTTON */
+.expense-container form button[type="submit"] {
+    background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
     border: none;
     border-radius: 6px;
-    cursor: pointer;
-    height: 42px;
-}
-form button {
-    flex: 1 1 150px;   
-    height: 42px;
-    margin-top: 19px;
-}
-button:hover {
-    background: #0056b3;
-}
-#premium{
-    list-style: none;
-    font-size:30px;
-    margin-left: 30px;
-    padding:20px;
-    font-weight: 200;
-}
-/* Table container */
-#expenseList {
+    padding: 10px;
     margin-top: 20px;
-    width: 100%;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.expense-container form button[type="submit"]:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(102,126,234,0.3);
+}
+
+/* AI BUTTON */
+#categoryBtnAiDiv {
+    display: flex;
+    align-items: flex-end;
+}
+
+#categoryBtnAi {
+    background: #00c853;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 13px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#categoryBtnAi:hover {
+    background: #009624;
+}
+
+/* =========================
+   TABLE SECTION
+========================= */
+#expenseList {
+    margin-top: 25px;
     overflow-x: auto;
 }
 
-/* Table */
-table {
-    min-width: 600px; 
+/* TABLE */
+#expenseList table {
     width: 100%;
     border-collapse: collapse;
+    min-width: 600px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-/* Header */
-th {
-    background: #007bff;
+/* HEADER */
+#expenseList th {
+    background: #667eea;
     color: white;
-    padding: 10px;
+    padding: 12px;
     text-align: left;
+    font-size: 14px;
 }
 
-/* Cells */
-td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+/* ROWS */
+#expenseList td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
 }
 
-/* Hover */
-tr:hover {
-    background: #f5f5f5;
+#expenseList tr:hover {
+    background: #f9f9ff;
 }
 
-/* Delete button */
-td button {
-    padding: 6px 10px;
-    background: #dc3545;
+/* DELETE BUTTON */
+#expenseList td button {
+    background: #e63946;
     border: none;
     color: white;
-    border-radius: 4px;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
 }
 
-td button:hover {
-    background: #a71d2a;
+#expenseList td button:hover {
+    background: #b71c1c;
 }
 
-/* Mobile */
+/* =========================
+   ACTION BUTTONS
+========================= */
+#logoutBtn,
+#paymentBtn {
+    margin-top: 20px;
+    margin-right: 10px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#logoutBtn {
+    background: #ff5252;
+    color: white;
+}
+
+#logoutBtn:hover {
+    background: #d32f2f;
+}
+
+#paymentBtn {
+    background: #00bcd4;
+    color: white;
+}
+
+#paymentBtn:hover {
+    background: #0097a7;
+}
+
+/* =========================
+   PREMIUM SECTION
+========================= */
+#premiumDiv {
+    margin-top: 30px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+#premiumDiv h2 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+#premium li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+/* =========================
+   MOBILE
+========================= */
 @media (max-width: 600px) {
 
-    .container {
+    .expense-container {
         margin: 20px 10px;
-        padding: 15px;
+        padding: 10px;
     }
 
-    form {
+    .expense-container form {
         flex-direction: column;
     }
 
-    button {
+    #logoutBtn,
+    #paymentBtn {
         width: 100%;
+        margin-bottom: 10px;
+    }
+
+    #expenseList table {
+        min-width: 100%;
     }
 }

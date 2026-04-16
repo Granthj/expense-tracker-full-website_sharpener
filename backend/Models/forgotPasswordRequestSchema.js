@@ -12,7 +12,11 @@ const ForgotPasswordRequest = db.define('ForgotPassword',{
     isActive:{
         type:DataTypes.BOOLEAN,
         defaultValue:true
-    }
+    },
+    userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
 });
 
 module.exports = ForgotPasswordRequest;

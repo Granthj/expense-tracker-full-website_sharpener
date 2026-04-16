@@ -7,17 +7,15 @@ const postExpense = async(req,res)=>{
 
     const transaction = await sequelize.transaction();
     try{
-        const {expenseAmount,category,description} = req.body;
+        const {expenseAmount,category,description,income} = req.body;
 
         if(!expenseAmount || !category || !description){
             await transaction.rollback()
             return res.status(400).json({message:'All fields are required'});
         }
         const userId = req.userId;
-        console.log(userId,'userID is from user connected!');
+        // console.log(userId,'userID is from user connected!');
         const user = await User.findByPk(userId,{transaction});
-        // console.log(user.totalExpense, typeof user.totalExpense);
-        // console.log(expenseAmount, typeof expenseAmount);
         user.totalExpense = Number(user.totalExpense) + Number(expenseAmount);
         await user.save({transaction:transaction});
 
@@ -26,7 +24,7 @@ const postExpense = async(req,res)=>{
         res.status(201).json([expense]);
     }
     catch(err){
-        transaction.rollback();
+        await transaction.rollback();
         return res.status(500).send('Something wrong');
     }
 }
