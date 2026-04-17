@@ -6,6 +6,8 @@ import { PasswordReset } from "./Components/PasswordReset.js";
 import { Payment } from "./Components/Payment.js";
 import { Navbar } from "./Components/Navbar.js";
 import { Income } from "./Components/Income.js";
+import { Report } from "./Components/Report.js";
+import { Note } from "./Components/Note.js";
 
 const app = document.getElementById("app");
 const publicRoutes = ["/login", "/sign-up", "/password","/forgotpassword"];
@@ -50,6 +52,14 @@ function render(route) {
 
     case "/add-income":
       app.appendChild(Income(navigate));
+      break;
+
+    case "/add-note":
+      app.appendChild(Note(navigate));
+      break;
+
+    case "/report":
+      app.appendChild(Report(navigate));
       break;
 
     default:

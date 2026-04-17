@@ -16,6 +16,11 @@ const Income = db.define('Income',{
         type:DataTypes.STRING,
         allowNull:false
     },
+    date:{
+        type:DataTypes.DATE,
+        allowNull:false,
+        defaultValue:DataTypes.NOW
+    },
     month:{
         type:DataTypes.STRING,
         allowNull:false

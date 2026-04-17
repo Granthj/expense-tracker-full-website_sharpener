@@ -11,7 +11,7 @@ export function Navbar(navigation) {
                     <li><a href="/add-income">Add Income</a></li>
                     <li><a href="/expense">Expenses</a></li>
                     <li><a href="/report">Reports</a></li>
-                    <li><a href="/profile">Profile</a></li>
+                    <li><a href="/add-note">Notes</a></li>
                 </ul>
 
                 <div class="menu-toggle">☰</div>
