@@ -43,13 +43,27 @@ const postExpense = async (req, res) => {
 const getExpense = async (req, res) => {
 
     try {
-        const expense = await Expense.findAll({
-            where: {
-                UserId: req.userId
-            }
+
+        const limit = parseInt(req.query.limit) || 10;
+        const page = parseInt(req.query.page) || 1;
+
+        const offSet = (page-1)*limit;
+
+        const {count,row} = await Expense.findAndCountAll({
+            where:{
+                UserId:req.userId
+            },
+            limit:limit,
+            offset:offset,
+            order:[['createdAt','DESC']]
         });
 
-        res.status(200).json(expense);
+        res.status(200).json({
+            expenses:row,
+            totalItems:count,
+            currentPage:page,
+            totalPages:Math.ceil(count/limit)
+        });
     }
     catch (err) {
         return res.status(500).send('Something wrong');

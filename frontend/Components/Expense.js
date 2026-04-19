@@ -37,7 +37,22 @@ export function Expense(navigate) {
       </form>
     </div>
 
-    <div id="expenseList"></div>
+    <div id="expenseSection">
+
+      <div id="pageControls">
+        <label>Items per page:</label>
+        <select id="pageSize">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+
+      <div id="expenseList"></div>
+
+      <div id="pagination"></div>
+
+    </div>
 
     <button id="logoutBtn">Logout</button>
     <button id="paymentBtn">Payment</button>
@@ -46,8 +61,12 @@ export function Expense(navigate) {
       <h2>Premium Members</h2>
       <ul id="premium"></ul>
     </div>
+    <div id="dynamicButton"></div>
   `;
 
+  let limit = 10;
+  let currentPage = 1;
+  
   const form = container.querySelector("#expenseForm");
   const amountTag = container.querySelector("#expenseAmount");
   const descriptionTag = container.querySelector("#description");
@@ -155,18 +174,48 @@ export function Expense(navigate) {
     form.reset();
     getExpenses();
   });
+  container.querySelector('#pageSize').addEventListener('change',(e)=>{
+    const limit = parseInt(e.target.value);
+    const currentPage = 1;
+    getExpenses(currentPage);
+  });
 
-  async function getExpenses() {
+  async function getExpenses(page = 1) {
     const token = localStorage.getItem("token");
 
-    const res = await axios.get("http://localhost:3000/api/expense", {
+    const res = await axios.get(`http://localhost:3000/api/expense?page=${page}&limit=${limit}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
     expenseList.innerHTML = "";
-    renderTable(res.data);
+    renderTable(res.data.expenses);
+    renderPagination(res.data.totalPages,res.data.currentPage);
   }
 
+  function renderPagination(totalPage,currentPage){
+
+    // const limit = container.querySelector('#pageSize').value;
+    const dynamicButtonDiv = container.querySelector('#dynamicButton');
+    dynamicButtonDiv.innerHTML = "";
+    
+    if(totalPage === 0) return;
+
+    for(let i = 1;i <= totalPage;i++){
+      const currentPageButton = document.createElement('button');
+      currentPageButton.textContent = i;
+
+      if(currentPage === i){
+        currentPageButton.disabled = true;
+        currentPageButton.style.fontWeight = 'bold';
+      }
+
+      currentPageButton.addEventListener('click',()=>{
+        getExpenses(i);
+      });
+      dynamicButtonDiv.appendChild(currentPageButton);
+    }
+
+  }
   function renderTable(data) {
     const table = document.createElement("table");
     table.border = "1";
