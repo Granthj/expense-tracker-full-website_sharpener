@@ -1,15 +1,19 @@
-/* =========================
-   WRAPPER
-========================= */
 .expense-container {
     max-width: 950px;
     margin: 40px auto;
     padding: 20px;
 }
 
-/* =========================
-   FORM CARD
-========================= */
+.expense-container h1{
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+#title-expense-table{
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
 .expense-container form {
     background: #ffffff;
     padding: 20px;
@@ -20,14 +24,14 @@
     box-shadow: 0 6px 20px rgba(0,0,0,0.1);
 }
 
-/* INPUT GROUP */
+
 .expense-container form div {
     display: flex;
     flex-direction: column;
     flex: 1 1 200px;
 }
 
-/* LABEL */
+
 .expense-container label {
     font-size: 13px;
     margin-bottom: 5px;
@@ -35,7 +39,7 @@
     font-weight: 600;
 }
 
-/* INPUT + SELECT */
+
 .expense-container input,
 .expense-container select {
     padding: 10px;
@@ -52,7 +56,6 @@
     outline: none;
 }
 
-/* ADD BUTTON */
 .expense-container form button[type="submit"] {
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
@@ -70,7 +73,6 @@
     box-shadow: 0 5px 15px rgba(102,126,234,0.3);
 }
 
-/* AI BUTTON */
 #categoryBtnAiDiv {
     display: flex;
     align-items: flex-end;
@@ -90,15 +92,11 @@
     background: #009624;
 }
 
-/* =========================
-   TABLE SECTION
-========================= */
 #expenseList {
     margin-top: 25px;
     overflow-x: auto;
 }
 
-/* TABLE */
 #expenseList table {
     width: 100%;
     border-collapse: collapse;
@@ -108,7 +106,6 @@
     overflow: hidden;
 }
 
-/* HEADER */
 #expenseList th {
     background: #667eea;
     color: white;
@@ -117,7 +114,7 @@
     font-size: 14px;
 }
 
-/* ROWS */
+
 #expenseList td {
     padding: 12px;
     border-bottom: 1px solid #eee;
@@ -128,7 +125,7 @@
     background: #f9f9ff;
 }
 
-/* DELETE BUTTON */
+
 #expenseList td button {
     background: #e63946;
     border: none;
@@ -143,9 +140,7 @@
     background: #b71c1c;
 }
 
-/* =========================
-   ACTION BUTTONS
-========================= */
+
 #logoutBtn,
 #paymentBtn {
     margin-top: 20px;
@@ -175,9 +170,7 @@
     background: #0097a7;
 }
 
-/* =========================
-   PREMIUM SECTION
-========================= */
+
 #premiumDiv {
     margin-top: 30px;
     background: #ffffff;
@@ -197,27 +190,117 @@
     font-size: 14px;
 }
 
-/* =========================
-   MOBILE
-========================= */
+#pageControls {
+  display: flex;
+  justify-content: center;   
+  align-items: center;
+  gap: 10px;
+  margin: 16px auto;         
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+
+#pageControls label {
+  font-size: 14px;
+  color: #333;
+}
+
+
+#pageSize {
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  cursor: pointer;
+  background: #fff;
+}
+
+#pageSize:hover {
+  border-color: #888;
+}
+
+#pageSize:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 4px rgba(76, 175, 80, 0.4);
+}
+#dynamicButton {
+  display: flex;
+  justify-content: center;    
+  align-items: center;
+  flex-wrap: wrap;             
+  gap: 8px;
+  margin: 20px auto;
+  width: 100%;                
+  text-align: center;
+}
+
+
+#dynamicButton .pagination-btn {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #333;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+
+#dynamicButton .pagination-btn:hover {
+  background: #f0f0f0;
+  border-color: #888;
+}
+
+
+#dynamicButton .pagination-btn.active {
+  background: #4CAF50;
+  color: #fff;
+  border-color: #4CAF50;
+  font-weight: bold;
+  cursor: default;
+}
+
+#dynamicButton .pagination-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 @media (max-width: 600px) {
 
-    .expense-container {
-        margin: 20px 10px;
-        padding: 10px;
-    }
+.expense-container {
+    margin: 20px 10px;
+    padding: 10px;
+}
 
-    .expense-container form {
-        flex-direction: column;
-    }
+.expense-container form {
+    flex-direction: column;
+}
+#pageControls {
+    flex-direction: column;
+    align-items: flex-start;
+}
 
-    #logoutBtn,
-    #paymentBtn {
-        width: 100%;
-        margin-bottom: 10px;
-    }
+#pageSize {
+    width: 100%;
+}
 
-    #expenseList table {
-        min-width: 100%;
-    }
+#logoutBtn,
+#paymentBtn {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#expenseList table {
+    min-width: 100%;
+}
+#dynamicButton {
+    gap: 6px;
+}
+
+#dynamicButton .pagination-btn {
+    padding: 5px 10px;
+    font-size: 13px;
+}
 }

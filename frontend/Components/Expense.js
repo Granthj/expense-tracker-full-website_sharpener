@@ -1,9 +1,12 @@
+import { API_URL } from "../src/config.js";
+
 export function Expense(navigate) {
   const container = document.createElement("div");
 
   container.innerHTML = `
     <div class="expense-container">
-      <form id="expenseForm">
+    <h1>Add your expense</h1>
+    <form id="expenseForm">
         <div>
           <label>Amount:</label>
           <input type="text" id="expenseAmount" name="expenseAmount">
@@ -40,33 +43,27 @@ export function Expense(navigate) {
     <div id="expenseSection">
 
       <div id="pageControls">
-        <label>Items per page:</label>
+        <label><h2>Items per page:</h2></label>
         <select id="pageSize">
-          <option value="10">10</option>
-          <option value="25">25</option>
-          <option value="50">50</option>
+          <option value="2">2</option>
+          <option value="4">4</option>
+          <option value="8">8</option>
         </select>
       </div>
 
+      <h2 id="title-expense-table">Your expenses</h2>
       <div id="expenseList"></div>
 
       <div id="pagination"></div>
 
     </div>
-
-    <button id="logoutBtn">Logout</button>
-    <button id="paymentBtn">Payment</button>
-
-    <div id="premiumDiv">
-      <h2>Premium Members</h2>
-      <ul id="premium"></ul>
-    </div>
     <div id="dynamicButton"></div>
   `;
 
-  let limit = 10;
-  let currentPage = 1;
-  
+  let limit = parseInt(localStorage.getItem('limit')||2);
+  let currentPage = parseInt(localStorage.getItem('currentPage')||1);
+  container.querySelector('#pageSize').value = limit;
+
   const form = container.querySelector("#expenseForm");
   const amountTag = container.querySelector("#expenseAmount");
   const descriptionTag = container.querySelector("#description");
@@ -92,7 +89,7 @@ export function Expense(navigate) {
     const select = document.createElement("select");
     select.id = "ai-category";
 
-    const res = await axios.post("http://localhost:3000/api/create-category", {
+    const res = await axios.post(`${API_URL}/create-category`, {
       description,
     });
 
@@ -164,7 +161,7 @@ export function Expense(navigate) {
     const token = localStorage.getItem("token");
 
     await axios.post(
-      "http://localhost:3000/api/expense",
+      `${API_URL}/expense`,
       { expenseAmount, description, category },
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -172,29 +169,37 @@ export function Expense(navigate) {
     );
 
     form.reset();
-    getExpenses();
-  });
-  container.querySelector('#pageSize').addEventListener('change',(e)=>{
-    const limit = parseInt(e.target.value);
-    const currentPage = 1;
     getExpenses(currentPage);
   });
-
+  container.querySelector('#pageSize').addEventListener('change',(e)=>{
+    limit = parseInt(e.target.value);
+    let currentPage = localStorage.getItem('currentPage');
+    localStorage.setItem("limit",limit);
+    getExpenses(currentPage);
+  });
+  
   async function getExpenses(page = 1) {
     const token = localStorage.getItem("token");
+    const limit = localStorage.getItem('limit');
 
-    const res = await axios.get(`http://localhost:3000/api/expense?page=${page}&limit=${limit}`, {
+    const res = await axios.get(`${API_URL}/expense?page=${page}&limit=${limit}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
     expenseList.innerHTML = "";
-    renderTable(res.data.expenses);
-    renderPagination(res.data.totalPages,res.data.currentPage);
+    
+    if(res.data.totalPages > 0 && page > res.data.totalPages){
+      currentPage = res.data.totalPages;
+      localStorage.setItem("currentPage",currentPage);
+      return getExpenses(currentPage)
+    }
+    renderTable(res.data.expenses,res.data.currentPage);
+  
+    renderPagination(res.data.totalPages,res.data.currentPage,res.data.expenses);
   }
 
-  function renderPagination(totalPage,currentPage){
+  function renderPagination(totalPage,currentPage,expenses){
 
-    // const limit = container.querySelector('#pageSize').value;
     const dynamicButtonDiv = container.querySelector('#dynamicButton');
     dynamicButtonDiv.innerHTML = "";
     
@@ -202,21 +207,25 @@ export function Expense(navigate) {
 
     for(let i = 1;i <= totalPage;i++){
       const currentPageButton = document.createElement('button');
+      currentPageButton.classList.add('pagination-btn');
+      currentPageButton.classList.add('active');
       currentPageButton.textContent = i;
 
+      
       if(currentPage === i){
         currentPageButton.disabled = true;
         currentPageButton.style.fontWeight = 'bold';
       }
-
       currentPageButton.addEventListener('click',()=>{
+        currentPage = i;
+        localStorage.setItem("currentPage",currentPage)
         getExpenses(i);
       });
       dynamicButtonDiv.appendChild(currentPageButton);
     }
 
   }
-  function renderTable(data) {
+  function renderTable(data,currentPage) {
     const table = document.createElement("table");
     table.border = "1";
 
@@ -248,14 +257,14 @@ export function Expense(navigate) {
         const token = localStorage.getItem("token");
 
         await axios.delete(
-          `http://localhost:3000/api/delete-expense/${item.id}`,
+          `${API_URL}/delete-expense/${item.id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
 
         row.remove();
-        showPremium();
+        getExpenses(currentPage);
       });
 
       td.appendChild(btn);
@@ -264,38 +273,10 @@ export function Expense(navigate) {
     });
 
     expenseList.appendChild(table);
-    showPremium();
   }
 
-  async function showPremium() {
-    const token = localStorage.getItem("token");
 
-    const res = await axios.get("http://localhost:3000/api/premium", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    premiumUl.innerHTML = "";
-
-    res.data.forEach((user) => {
-      if (user.totalExpense !== 0) {
-        const li = document.createElement("li");
-        li.textContent = `Name: ${user.name} - Amount: ${user.totalExpense}`;
-        premiumUl.appendChild(li);
-      }
-    });
-  }
-
-  container.querySelector("#logoutBtn").addEventListener("click", () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  });
-
-  container.querySelector("#paymentBtn").addEventListener("click", () => {
-    navigate("/payment");
-  });
-
-  getExpenses();
-  showPremium();
+  getExpenses(currentPage);
 
   return container;
 }

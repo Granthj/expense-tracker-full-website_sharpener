@@ -1,10 +1,12 @@
+import { API_URL } from "../src/config.js";
 
 export function Login(navigate) {
 
     const container = document.createElement('div');
     container.innerHTML = `
         <div class="login-container">
-            <form id="form">
+        <form id="form">
+        <h2 id="login-title">Login</h2>
 
                 <div id="emailDiv">
 
@@ -45,7 +47,7 @@ export function Login(navigate) {
             const email = e.target.email.value;
             const password = e.target.password.value;
 
-            const response = await axios.post('http://localhost:3000/api/login',
+            const response = await axios.post(`${API_URL}/login`,
                 {
                     email,
                     password
@@ -54,8 +56,7 @@ export function Login(navigate) {
             if (!response.data.token) {
                 throw new Error("No token received");
             }
-            // if (response.data.success) {
-            // }
+            
             localStorage.setItem('token', response.data.token);
             alert('Log in successfully');
             navigate("/dashboard");

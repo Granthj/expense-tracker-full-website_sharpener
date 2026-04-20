@@ -1,3 +1,4 @@
+import { API_URL } from "../src/config.js";
 
 export function Note(navigation) {
     
@@ -21,7 +22,7 @@ export function Note(navigation) {
         e.preventDefault();
         const description = e.target.description.value;
         try{
-            const response = await axios.post('http://localhost:3000/api/add-note',
+            const response = await axios.post(`${API_URL}/add-note`,
                 {
                      description   
                 },
@@ -39,7 +40,7 @@ export function Note(navigation) {
     async function getData(){
 
         try{
-            const response = await axios.get('http://localhost:3000/api/get-notes',
+            const response = await axios.get(`${API_URL}/get-notes`,
                 {
                     headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}
                 }
@@ -78,7 +79,7 @@ export function Note(navigation) {
             deleteButton.addEventListener('click', async ()=>{
 
                 await axios.delete(
-                  `http://localhost:3000/api/delete-note/${note.id}`,
+                  `${API_URL}/delete-note/${note.id}`,
                   {
                     headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}
                   }

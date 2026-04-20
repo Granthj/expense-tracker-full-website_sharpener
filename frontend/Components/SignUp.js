@@ -1,3 +1,4 @@
+import { API_URL } from "../src/config.js";
 
 export function SignUp(navigate) {
 
@@ -5,6 +6,7 @@ export function SignUp(navigate) {
     container.innerHTML = `
     <div class="signup-container">
          <form id="form">
+         <h2>Sign Up</h2>
             <div id="nameDiv">
 
                 <label for="name">Name:</label>
@@ -42,7 +44,7 @@ export function SignUp(navigate) {
             const email = e.target.email.value;
             const password = e.target.password.value;
 
-            const response = await axios.post('http://localhost:3000/api/sign-up', {
+            const response = await axios.post(`${API_URL}/sign-up`, {
                 name,
                 email,
                 password

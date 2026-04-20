@@ -62,8 +62,8 @@ const monthlyTable = async (req, res) => {
 
         });
         const finalIncome = totalIncome || 0;
-        const savings = finalIncome - totalExpense;
-        if (finalIncome - totalExpense <= 0) {
+        let savings = finalIncome - totalExpense;
+        if (savings <= 0) {
             savings = 0;
         }
         // if(!income){
@@ -144,8 +144,8 @@ const yearlyTable = async (req, res) => {
                 year: currentYear
             }
         });
-        const savings = totalIncome - totalExpense;
-        if (totalIncome - totalExpense <= 0) {
+        let savings = totalIncome - totalExpense;
+        if (savings <= 0) {
             savings = 0;
         }
         res.status(200).json({

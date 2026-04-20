@@ -1,3 +1,4 @@
+import { API_URL } from "../src/config.js";
 
 export function Payment(navigate) {
 
@@ -15,7 +16,7 @@ export function Payment(navigate) {
 container.querySelector("#renderBtn").addEventListener("click", async() => {
     const token = localStorage.getItem('token')
     // console.log(token,'paymentbfhch')
-    const res = await axios.post('http://localhost:3000/api/pay',{},{
+    const res = await axios.post(`${API_URL}/pay`,{},{
         
         headers:{
             Authorization:`Bearer ${token}`
@@ -43,7 +44,7 @@ container.querySelector("#renderBtn").addEventListener("click", async() => {
         }
         if (result.paymentDetails) {
             // This will be called whenever the payment is completed irrespective of transaction status
-            const res = await axios.get(`http://localhost:3000/api/payment-status/${orderId}`);
+            const res = await axios.get(`${API_URL}/payment-status/${orderId}`);
             alert("Your payment is" + res.data.orderStatus);
             console.log(res.data.orderStatus,'like here')
             console.log("Payment has been completed, Check for Payment Status");

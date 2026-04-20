@@ -1,3 +1,5 @@
+import { API_URL } from "../src/config.js";
+
 export function Table3Report(navigation) {
 
     const container = document.createElement('div');
@@ -26,14 +28,13 @@ export function Table3Report(navigation) {
     async function getData(){
         
         try{
-            const response = await axios.get('http://localhost:3000/api/premium/notes-data-table',{
+            const response = await axios.get(`${API_URL}/premium/notes-data-table`,{
                 headers:{
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             });
             if(response.status === 200){
                 const data = response.data;
-                // console.log(data.notes,"didi");
                 render(data.notes);
             }
         }

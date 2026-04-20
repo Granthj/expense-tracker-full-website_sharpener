@@ -22,10 +22,10 @@ const changePassword = async (req, res) => {
         const resetLink = `http://localhost:3000/forgotpassword?id=${forgotPassword.id}`;
 
         await sendEmail(email, 'Forgot Password Link', resetLink);
-        res.status(201).json({ message: 'Link send' });
+        res.status(201).json({ message: 'Link send' ,success:true});
     }
     catch (err) {
-        return res.status(500).json({ message: 'Something went wrong' });
+        return res.status(500).json({ message: 'Something went wrong', success:false});
     }
 }
 

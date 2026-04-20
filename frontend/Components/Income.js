@@ -1,6 +1,5 @@
-// document.addEventListener("DOMContentLoaded", () => {
-//      getIncome();
-// });
+import { API_URL } from "../src/config.js";
+
 export function Income(navigate) {
 
     const container = document.createElement('div');
@@ -31,7 +30,7 @@ export function Income(navigate) {
             const description = e.target.description.value;
 
             const token = localStorage.getItem("token");
-            const response = await axios.post('http://localhost:3000/api/add-income', {
+            const response = await axios.post(`${API_URL}/add-income`, {
                 amount,
                 description
             },
@@ -53,7 +52,7 @@ export function Income(navigate) {
     async function getIncome() {
         const token = localStorage.getItem("token");
 
-        const res = await axios.get("http://localhost:3000/api/income", {
+        const res = await axios.get(`${API_URL}/income`, {
             headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -61,7 +60,6 @@ export function Income(navigate) {
         renderTable(res.data);
     }
     const renderTable = (data) => {
-        console.log(data.data, "fghjk")
         const table = document.createElement("table");
         table.border = "1";
 
@@ -94,14 +92,13 @@ export function Income(navigate) {
                 const token = localStorage.getItem("token");
 
                 await axios.delete(
-                  `http://localhost:3000/api/delete-income/${item.id}`,
+                  `${API_URL}/delete-income/${item.id}`,
                   {
                     headers: { Authorization: `Bearer ${token}` },
                   }
                 );
 
                 row.remove();
-                // showPremium();
               });
 
             td.appendChild(btn);

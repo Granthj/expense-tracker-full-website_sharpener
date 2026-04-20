@@ -1,3 +1,5 @@
+import { API_URL } from "../src/config.js";
+
 export function Table2Report(navigation) {
 
     const container = document.createElement('div');
@@ -25,7 +27,7 @@ export function Table2Report(navigation) {
     async function getData() {
 
         try{
-            const response = await axios.get('http://localhost:3000/api/premium/yearly-data-table', {
+            const response = await axios.get(`${API_URL}/premium/yearly-data-table`, {
                 headers:{
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
@@ -34,7 +36,6 @@ export function Table2Report(navigation) {
                 const data = response.data;
                 render(data.month, data.totalIncome, data.totalExpense, data.savings, data.title);
             }
-            // console.log(response.data);
         } catch (error) {
             console.error('Error fetching yearly data:', error);
         }

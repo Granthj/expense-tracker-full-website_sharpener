@@ -1,3 +1,4 @@
+import { API_URL } from "../src/config.js";
 
 export function Table1Report(navigation) {
 
@@ -28,7 +29,7 @@ export function Table1Report(navigation) {
     async function getData() {
 
         try {
-            const response = await axios.get('http://localhost:3000/api/premium/monthly-data-table', {
+            const response = await axios.get(`${API_URL}/premium/monthly-data-table`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
@@ -38,7 +39,6 @@ export function Table1Report(navigation) {
                 const data = response.data;
                 render(data.data, data.totalExpense, data.totalIncome, data.savings, data.monthAndDate);
             }
-            // console.log(response);
         }
         catch (err) {
             console.error('Error fetching data:', err);
@@ -51,8 +51,6 @@ export function Table1Report(navigation) {
         let dailyExpense = 0;
         const values = Object.entries(groupedData);
 
-        // console.log(values);
-        // console.log(values, 'hahahaha');
         values.forEach(([date, item]) => {
             item.forEach(i => {
 

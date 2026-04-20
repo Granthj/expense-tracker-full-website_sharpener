@@ -1,3 +1,4 @@
+import { API_URL } from "../src/config.js";
 
 export function PasswordReset(navigate) {
     console.log("PasswordReset mounted");
@@ -21,9 +22,9 @@ export function PasswordReset(navigate) {
                 <div id="passwordError" class="error-message"></div>
                 <button type="submit" id="button">Change</button>
                 <br>
+                <div id="message"></div>
             </form>
             <br>
-            <div id="message"></div>
         </div>
         `
         const form = container.querySelector('#form');
@@ -48,8 +49,7 @@ export function PasswordReset(navigate) {
                     errorDiv.innerHTML = ''
                 }
                 const id = new URLSearchParams(window.location.search).get('id');
-                // console.log(password, 'passpasspass');
-                const res = await axios.post(`http://localhost:3000/api/password/forgotpassword`, {
+                const res = await axios.post(`${API_URL}/password/forgotpassword`, {
                     id,
                     password,
                     newPassword
@@ -64,7 +64,6 @@ export function PasswordReset(navigate) {
                     div.appendChild(h1);
                     setTimeout(() => {
                         div.innerHTML = '';
-                        // history.replaceState(null, '', '/login');
                         window.location.replace('/login');
                     }, 2000);
                 }

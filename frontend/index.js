@@ -8,6 +8,7 @@ import { Navbar } from "./Components/Navbar.js";
 import { Income } from "./Components/Income.js";
 import { Report } from "./Components/Report.js";
 import { Note } from "./Components/Note.js";
+import { PremiumUser } from "./Components/PremiumUsers.js"
 
 const app = document.getElementById("app");
 const publicRoutes = ["/login", "/sign-up", "/password","/forgotpassword"];
@@ -60,6 +61,10 @@ function render(route) {
 
     case "/report":
       app.appendChild(Report(navigate));
+      break;
+
+    case "/premium-users":
+      app.appendChild(PremiumUser(navigate));
       break;
 
     default:

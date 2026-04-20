@@ -1,6 +1,7 @@
 import { Table1Report } from "./Table1Report.js";
 import { Table2Report } from "./Table2Report.js";
 import { Table3Report } from "./Table3Report.js";
+// import { API_URL } from "../src/config.js";
 
 export function Report(navigation) {
     const mainContainer = document.createElement('div');

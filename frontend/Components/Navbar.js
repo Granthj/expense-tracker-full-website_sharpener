@@ -1,3 +1,4 @@
+import { API_URL } from "../src/config.js";
 
 export function Navbar(navigation) {
 
@@ -8,10 +9,13 @@ export function Navbar(navigation) {
                 <div class="logo">ExpenseApp</div>
 
                 <ul class="nav-links">
+                    <li><a href="/payment">Go Payment</a></li>
+                    <li><a href="/dashboard">Expenses</a></li>
                     <li><a href="/add-income">Add Income</a></li>
-                    <li><a href="/expense">Expenses</a></li>
-                    <li><a href="/report">Reports</a></li>
                     <li><a href="/add-note">Notes</a></li>
+                    <li><a href="/report">Reports</a></li>
+                    <li><a href="/premium-users">Premium Users</a></li>
+                    <li><a href="/logout">Logout</a></li>
                 </ul>
 
                 <div class="menu-toggle">☰</div>
@@ -23,10 +27,15 @@ export function Navbar(navigation) {
         link.addEventListener('click',(e)=>{
             e.preventDefault();
             const route = link.getAttribute('href');
-            navigation(route);
+            if(route === '/logout'){
+                localStorage.removeItem("token");
+                navigation("/login");
+            }
+            else{
+                navigation(route);
+            }
         })
     });
-    // container.querySelector('.nav').innerHTML = data;
 
     // mobile toggle
     const toggle = container.querySelector('.menu-toggle');
