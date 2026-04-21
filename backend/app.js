@@ -9,12 +9,18 @@ const ForgotPassword = require('./Models/forgotPasswordRequestSchema');
 const Expense = require('./Models/expenseSchema');
 const Income = require('./Models/incomeSchema');
 const https = require('https');
+const compression = require('compression');
+const morgan = require('morgan');
 
 const express = require('express');
 const app = express();
-const privateKey = fs.readFileSync('server.key');
-const certificate = fs.readFileSync('server.cert');
-const server = https.createServer({ key: privateKey, cert: certificate }, app);
+// const privateKey = fs.readFileSync('server.key');
+// const certificate = fs.readFileSync('server.cert');
+// const server = https.createServer({ key: privateKey, cert: certificate }, app);
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
+app.use(compression());
+app.use(morgan('combined',{stream: accessLogStream}));
+
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname,"../frontend")));
@@ -52,10 +58,10 @@ app.use((req, res, next) => {
     res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 db.sync().then(()=>{
-    // app.listen(3000,()=>{
-    //     console.log('Connected to server 3000');
-    // });
-    https.createServer({ key: privateKey, cert: certificate }, app).listen(3000, () => {
+    app.listen(3000,()=>{
         console.log('Connected to server 3000');
     });
+    // https.createServer({ key: privateKey, cert: certificate }, app).listen(3000, () => {
+    //     console.log('Connected to server 3000');
+    // });
 });
