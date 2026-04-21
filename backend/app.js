@@ -11,6 +11,7 @@ const Income = require('./Models/incomeSchema');
 const https = require('https');
 const compression = require('compression');
 const morgan = require('morgan');
+require('dotenv').config();
 
 const express = require('express');
 const app = express();
@@ -58,7 +59,7 @@ app.use((req, res, next) => {
     res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 db.sync().then(()=>{
-    app.listen(3000,()=>{
+    app.listen(process.env.PORT || 3000,()=>{
         console.log('Connected to server 3000');
     });
     // https.createServer({ key: privateKey, cert: certificate }, app).listen(3000, () => {
