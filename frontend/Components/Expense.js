@@ -17,6 +17,11 @@ export function Expense(navigate) {
           <input type="text" id="description" name="description">
         </div>
 
+        <div>
+          <label>Note:</label>
+          <input type="text" id="note" name="note">
+        </div>
+
         <div id="categoryDiv">
           <label>Choose category:</label>
           <select id="category" name="category">
@@ -67,6 +72,7 @@ export function Expense(navigate) {
   const form = container.querySelector("#expenseForm");
   const amountTag = container.querySelector("#expenseAmount");
   const descriptionTag = container.querySelector("#description");
+  const noteTag = container.querySelector("#note");
   const categoryDiv = container.querySelector("#categoryDiv");
   const categoryBtn = container.querySelector("#categoryBtnAi");
   const categoryBtnDiv = container.querySelector("#categoryBtnAiDiv");
@@ -94,6 +100,13 @@ export function Expense(navigate) {
     });
 
     const categories = JSON.parse(res.data.response);
+
+    //updated part
+    const placeholder = document.createElement("option");
+    placeholder.textContent = "Select category";
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    select.appendChild(placeholder);
 
     categories.forEach((item) => {
       const clean = item.replace(/\*\*/g, "");
@@ -156,13 +169,13 @@ export function Expense(navigate) {
 
     const expenseAmount = amountTag.value;
     const description = descriptionTag.value;
+    const note = noteTag.value;
     const category = selectedCategory.value;
 
     const token = localStorage.getItem("token");
-
-    await axios.post(
-      `${API_URL}/expense`,
-      { expenseAmount, description, category },
+    console.log(note,'gh')
+    await axios.post(`${API_URL}/expense`,
+      { expenseAmount, description, category, note },
       {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -229,7 +242,7 @@ export function Expense(navigate) {
     const table = document.createElement("table");
     table.border = "1";
 
-    const header = ["Amount", "Description", "Category", "Action"];
+    const header = ["Amount", "Description", "Category", "Note", "Action"];
     const tr = document.createElement("tr");
 
     header.forEach((h) => {
@@ -247,6 +260,7 @@ export function Expense(navigate) {
         <td>${item.expenseAmount}</td>
         <td>${item.description}</td>
         <td>${item.category}</td>
+        <td>${item.note}</td>
       `;
 
       const td = document.createElement("td");

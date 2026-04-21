@@ -25,6 +25,10 @@ const Expense = db.define('Expenses',{
         type:DataTypes.STRING,
         allowNull:false
     },
+    note:{
+        type:DataTypes.STRING,
+        allowNull:false
+    },
     date:{
         type:DataTypes.DATE,
         allowNull:false,

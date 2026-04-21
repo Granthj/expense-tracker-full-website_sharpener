@@ -7,9 +7,9 @@ const postExpense = async (req, res) => {
 
     const transaction = await sequelize.transaction();
     try {
-        const { expenseAmount, category, description } = req.body;
+        const { expenseAmount, category, description, note } = req.body;
 
-        if (!expenseAmount || !category || !description) {
+        if (!expenseAmount || !category || !description || !note) {
             await transaction.rollback()
             return res.status(400).json({ message: 'All fields are required' });
         }
@@ -29,6 +29,7 @@ const postExpense = async (req, res) => {
             expenseAmount: expenseAmount,
             category: category,
             description: description, 
+            note:note,
             UserId: userId }, 
             { transaction });
         await transaction.commit();
