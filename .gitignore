@@ -4,3 +4,4 @@ package.json
 .env
 server.key
 server.cert
+access.log
