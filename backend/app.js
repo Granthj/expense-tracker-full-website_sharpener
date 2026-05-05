@@ -40,24 +40,24 @@ ForgotPassword.belongsTo(User, { foreignKey: 'userId' });
 app.use('/api',apiRoutes);
 // app.use('/',pageRoutes);
 
-// app.use((req,res)=>{
-//     res.sendFile(path.join(__dirname,'../frontend/index.html'));
-// });
-app.use((req, res, next) => {
-
-    // allow API
-    if (req.path.startsWith('/api')) {
-        return next();
-    }
-
-    // allow static files (.js, .css, images)
-    if (req.path.includes('.')) {
-        return next();
-    }
-
-    // fallback to SPA
-    res.sendFile(path.join(__dirname, '../frontend/index.html'));
+app.use((req,res)=>{
+    res.sendFile(path.join(__dirname,'../frontend/index.html'));
 });
+// app.use((req, res, next) => {
+
+//     // allow API
+//     if (req.path.startsWith('/api')) {
+//         return next();
+//     }
+
+//     // allow static files (.js, .css, images)
+//     if (req.path.includes('.')) {
+//         return next();
+//     }
+
+//     // fallback to SPA
+//     res.sendFile(path.join(__dirname, '../frontend/index.html'));
+// });
 db.sync().then(()=>{
     app.listen(process.env.PORT || 3000,()=>{
         console.log('Connected to server 3000');

@@ -27,7 +27,7 @@ export function Table1Report(navigation) {
     `;
 
     async function getData() {
-
+        console.log('table1 report',localStorage.getItem('token'))
         try {
             const response = await axios.get(`${API_URL}/premium/monthly-data-table`, {
                 headers: {
@@ -62,7 +62,11 @@ export function Table1Report(navigation) {
                     dailyExpense += Number(i.amount);
                 }
                 tr.innerHTML = `
-                    <td>${i.date}</td>
+                    <td>${new Date(date).toLocaleDateString('en-IN',{
+                        day:'2-digit',
+                        month:'short',
+                        year:'numeric'
+                    })}</td>
                     <td>${i.description}</td>
                     <td>${i.category || '-'}</td>
                     <td>${i.type === 'Income' ? i.amount : '-'}</td>

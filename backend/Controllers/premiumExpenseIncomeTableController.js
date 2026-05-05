@@ -16,9 +16,9 @@ const monthlyTable = async (req, res) => {
                 id: req.userId
             }
         });
-        if (!user.isPremium) {
-            return res.status(403).json({ message: 'User is not authorized' });
-        }
+        // if (!user.isPremium) {
+        //     return res.status(403).json({ message: 'User is not authorized' });
+        // }
         const expense = await Expense.findAll({
             where: {
                 UserId: req.userId,

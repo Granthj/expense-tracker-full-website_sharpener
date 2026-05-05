@@ -1,4 +1,4 @@
-/* .expense-container {
+.expense-container {
     max-width: 950px;
     margin: 40px auto;
     padding: 20px;
@@ -303,11 +303,11 @@
     padding: 5px 10px;
     font-size: 13px;
 }
-} */
+}
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap');
 
-/* ── Reset & Base ─────────────────────────── */
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -318,7 +318,6 @@
   --font-main: 'DM Sans', sans-serif;
   --font-mono: 'DM Mono', monospace;
 
-  /* Palette */
   --clr-bg:          #f7f6f2;
   --clr-surface:     #ffffff;
   --clr-surface-2:   #f0efe9;
@@ -329,9 +328,9 @@
   --clr-ink-2:       #4a4844;
   --clr-ink-3:       #8a8880;
 
-  --clr-accent:      #2a6b4a;   /* deep green — money */
+  --clr-accent:      #2a6b4a;  
   --clr-accent-lt:   #e8f4ee;
-  --clr-accent-2:    #d45f2a;   /* warm coral — CTA */
+  --clr-accent-2:    #d45f2a;   
   --clr-accent-2-lt: #fdf0e8;
 
   --clr-active-bg:   #1a1916;
@@ -358,7 +357,7 @@ body {
   padding: 2rem 1rem;
 }
 
-/* ── Page Layout ──────────────────────────── */
+
 .page-wrapper {
   max-width: 900px;
   margin: 0 auto;
@@ -374,7 +373,7 @@ body {
   }
 }
 
-/* ── Expense Form Container ───────────────── */
+
 .expense-container {
   background: var(--clr-surface);
   border: 1px solid var(--clr-border);
@@ -395,7 +394,7 @@ body {
   border-bottom: 1px solid var(--clr-border);
 }
 
-/* ── Form Fields ──────────────────────────── */
+
 #expenseForm {
   display: flex;
   flex-direction: column;
@@ -458,7 +457,7 @@ body {
   box-shadow: var(--shadow-focus);
 }
 
-/* Custom select arrow */
+
 #category {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238a8880' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -467,7 +466,7 @@ body {
   cursor: pointer;
 }
 
-/* ── Buttons ──────────────────────────────── */
+
 #expenseForm button[type="submit"] {
   font-family: var(--font-main);
   font-size: 0.9rem;
@@ -527,7 +526,7 @@ body {
   transform: scale(0.98);
 }
 
-/* ── Expense Section ──────────────────────── */
+
 #expenseSection {
   background: var(--clr-surface);
   border: 1px solid var(--clr-border);
@@ -536,7 +535,7 @@ body {
   box-shadow: var(--shadow-card);
 }
 
-/* ── Page Controls ────────────────────────── */
+
 #pageControls {
   display: flex;
   align-items: center;
@@ -580,7 +579,6 @@ body {
 #pageSize:hover { border-color: var(--clr-border-mid); }
 #pageSize:focus { border-color: var(--clr-accent); box-shadow: var(--shadow-focus); }
 
-/* ── Expense Table Heading ────────────────── */
 #title-expense-table {
   font-size: 1.15rem;
   font-weight: 600;
@@ -591,7 +589,6 @@ body {
   border-bottom: 1px solid var(--clr-border);
 }
 
-/* ── Expense List ─────────────────────────── */
 #expenseList {
   display: flex;
   flex-direction: column;
@@ -599,7 +596,6 @@ body {
   min-height: 120px;
 }
 
-/* Individual expense item — JS should add this class */
 .expense-item {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -649,7 +645,7 @@ body {
   white-space: nowrap;
 }
 
-/* Empty state */
+
 #expenseList:empty::after {
   content: 'No expenses yet. Add your first one →';
   display: block;
@@ -661,7 +657,7 @@ body {
   border-radius: var(--radius-md);
 }
 
-/* ── Pagination ───────────────────────────── */
+
 #pagination {
   display: flex;
   align-items: center;
@@ -673,7 +669,6 @@ body {
   flex-wrap: wrap;
 }
 
-/* Base pagination button — JS adds .pagination-btn */
 .pagination-btn {
   font-family: var(--font-main);
   font-size: 0.85rem;
@@ -699,17 +694,16 @@ body {
   transform: scale(0.95);
 }
 
-/* Active page — JS adds .active */
 .pagination-btn.active {
   background: var(--clr-active-bg);
   color: var(--clr-active-txt);
   border-color: var(--clr-active-bg);
-  font-weight: 600;  /* overrides JS fontWeight inline — you can remove the JS line */
+  font-weight: 600;  
   cursor: default;
   pointer-events: none;
 }
 
-/* Prev / Next arrows */
+
 .pagination-btn.prev,
 .pagination-btn.next {
   color: var(--clr-ink-3);
@@ -728,7 +722,7 @@ body {
   pointer-events: none;
 }
 
-/* ── Dynamic Button Area ──────────────────── */
+
 #dynamicButton {
   display: flex;
   justify-content: flex-end;
@@ -736,7 +730,7 @@ body {
   margin-top: 0.5rem;
 }
 
-/* Utility — dynamic buttons inserted by JS */
+
 #dynamicButton button {
   font-family: var(--font-main);
   font-size: 0.82rem;
@@ -759,7 +753,7 @@ body {
   transform: scale(0.97);
 }
 
-/* ── Responsive Tweaks ────────────────────── */
+
 @media (max-width: 480px) {
   body { padding: 1rem 0.75rem; }
 
@@ -770,7 +764,7 @@ body {
   }
 
   .expense-container {
-    position: static;  /* no sticky on small screens */
+    position: static;  
   }
 
   .expense-item {
@@ -793,4 +787,4 @@ body {
     grid-column: 1 / -1;
     grid-row: 2;
   }
-}
+} */
