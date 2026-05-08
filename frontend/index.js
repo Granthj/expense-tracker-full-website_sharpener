@@ -83,10 +83,7 @@ window.addEventListener("popstate", () => {
 
 function init() {
   const token = localStorage.getItem("token");
-  const currentRoute = window.location.pathname;
-
-  // Public routes (no token required)
-  
+  const currentRoute = window.location.pathname;  
 
   if (!token && !publicRoutes.includes(currentRoute)) {
     render("/login");

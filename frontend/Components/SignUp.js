@@ -57,7 +57,7 @@ export function SignUp(navigate) {
                 if (errorExists) {
                     errorExists.remove();
                 }
-                const p = container.createElement('p');
+                const p = document.createElement('p');
 
                 p.textContent = err.response.data.message;
                 p.id = 'alert';
